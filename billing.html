@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Billing - Kavitha Mess</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fffaf0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .bill-box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 350px;
+    }
+    h2 {
+      color: #e67e22;
+      margin-bottom: 10px;
+    }
+    .details {
+      font-size: 16px;
+      margin: 15px 0;
+      color: #333;
+    }
+    .qr {
+      margin-top: 20px;
+    }
+    .qr img {
+      width: 200px;
+      height: 200px;
+    }
+    .note {
+      font-size: 13px;
+      color: #888;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bill-box">
+    <h2>🧾 Billing Summary</h2>
+    <div class="details" id="summary">
+      Loading...
+    </div>
+    <div class="qr">
+      <img src="your-qr-code.png" alt="Scan QR">
+      <p><strong>Pay to:</strong> parrathpk@upi</p>
+    </div>
+    <p class="note">Scan & Pay. Show confirmation at counter or wait for delivery.</p>
+  </div>
+
+  <script>
+    const url = new URLSearchParams(window.location.search);
+    const name = url.get("name");
+    const mobile = url.get("mobile");
+    const item = url.get("item");
+    const qty = url.get("qty");
+    const total = url.get("total");
+
+    const summary = `
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Mobile:</strong> ${mobile}</p>
+      <p><strong>Item:</strong> ${item}</p>
+      <p><strong>Quantity:</strong> ${qty}</p>
+      <p><strong>Total:</strong> ₹${total}</p>
+    `;
+    document.getElementById("summary").innerHTML = summary;
+  </script>
+</body>
+</html>

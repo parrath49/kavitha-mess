@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kavitha Mess - Online Order</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      color: #e67e22;
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .row input {
+      width: 48%;
+    }
+    #total {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #e67e22;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #d35400;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🛒 Order at Kavitha Mess</h2>
+    <form onsubmit="submitOrder(event)">
+      <label for="name">Name</label>
+      <input type="text" id="name" required>
+
+      <label for="mobile">Mobile Number</label>
+      <input type="tel" id="mobile" required>
+
+      <label for="item">Select Item</label>
+      <select id="item" required onchange="updatePrice()">
+        <option value="">-- Select --</option>
+        <option value="Itly">Itly - ₹6</option>
+        <option value="Dosa">Dosa - ₹30</option>
+        <option value="Egg Dosa">Egg Dosa - ₹40</option>
+        <option value="Poori">Poori - ₹30</option>
+        <option value="White Rice">White Rice - ₹70</option>
+        <option value="Chicken Biriyani">Chicken Biriyani - ₹100</option>
+      </select>
+
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" value="1" min="1" onchange="calculateTotal()">
+
+      <div id="total">Total: ₹0</div>
+
+      <button type="submit">Proceed to Billing</button>
+    </form>
+  </div>
+
+  <script>
+    const prices = {
+      "Itly": 6,
+      "Dosa": 30,
+      "Egg Dosa": 40,
+      "Poori": 30,
+      "White Rice": 70,
+      "Chicken Biriyani": 100
+    };
+
+    function updatePrice() {
+      calculateTotal();
+    }
+
+    function calculateTotal() {
+      const item = document.getElementById('item').value;
+      const qty = parseInt(document.getElementById('quantity').value);
+      if (item && prices[item]) {
+        const total = prices[item] * qty;
+        document.getElementById('total').innerText = `Total: ₹${total}`;
+      } else {
+        document.getElementById('total').innerText = "Total: ₹0";
+      }
+    }
+
+    function submitOrder(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const mobile = document.getElementById('mobile').value;
+      const item = document.getElementById('item').value;
+      const quantity = document.getElementById('quantity').value;
+      const total = prices[item] * quantity;
+
+      const query = `billing.html?name=${encodeURIComponent(name)}&mobile=${mobile}&item=${item}&qty=${quantity}&total=${total}`;
+      window.location.href = query;
+    }
+  </script>
+</body>
+</html>
